@@ -3,4 +3,5 @@ class Journey < ApplicationRecord
 
     validates :name, presence: true
     validates :start_time, presence: true
+    validates :start_date, presence: true
 end

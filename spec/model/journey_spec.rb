@@ -4,4 +4,5 @@ RSpec.describe Journey, type: :model do
   it {should validate_presence_of :start_time}
 
   it {should have_many :meetings}
+  it {should validate_presence_of :start_date}
 end
