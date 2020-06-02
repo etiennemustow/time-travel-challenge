@@ -1,6 +1,6 @@
 class JourneysController < ApplicationController
   before_action :set_journey, only: [:edit, :update, :destroy]
-  
+
     def index
       @journeys = Journey.all
     end
@@ -17,6 +17,7 @@ class JourneysController < ApplicationController
         else
           format.html { render :new }
           flash[:alert] = @journey.errors.full_messages.to_sentence
+          puts @journey.errors.full_messages.to_sentence
         end
       end
     end

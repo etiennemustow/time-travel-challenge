@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_02_103934) do
+ActiveRecord::Schema.define(version: 2020_06_02_135441) do
 
   create_table "journeys", force: :cascade do |t|
     t.time "start_time"
@@ -22,11 +22,14 @@ ActiveRecord::Schema.define(version: 2020_06_02_103934) do
 
   create_table "meetings", force: :cascade do |t|
     t.string "postcode"
-    t.time "duration"
     t.string "name"
     t.integer "journey_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "travel_time"
+    t.integer "duration"
+    t.time "arrival_time"
+    t.time "departure_time"
     t.index ["journey_id"], name: "index_meetings_on_journey_id"
   end
 
