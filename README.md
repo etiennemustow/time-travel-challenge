@@ -1,24 +1,6 @@
-# README
+# Travel Time Challenge
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+## How to use
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Clone the repository, run `bundle install` and `rake db:setup`. Start the server with `rails s`.

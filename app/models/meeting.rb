@@ -4,26 +4,40 @@ class Meeting < ApplicationRecord
     validates :postcode, presence: true
     validates_numericality_of :duration, allow_blank: true
     validates :name, presence: true
-
     before_save :calculate_travel_time
 
   def next
-    self.journey.meetings.order("created_at").where("created_at > ?", Time.current).first
+    self.journey.meetings.where("id > ?", self.id).first  
   end
 
   def previous
-    self.journey.meetings.order("created_at").where("created_at < ?", Time.current).first
+    self.journey.meetings.where("id > ?", self.id).first  
   end
 
   private
 
     def calculate_travel_time
-      puts start_coords = self.previous ? get_coord(self.previous.postcode) : '51.5199586,-0.0984249'
-      puts end_coords = get_coord(self.postcode)
-      puts url = URI.parse("https://developer.citymapper.com/api/1/traveltime/?startcoord=#{start_coords}&endcoord=#{end_coords}&time=2014-11-06T19%3A00%3A02-0500&time_type=arrival&key=fcb9f0259d60e4b753865645b6f6f36a")
-      puts req = Net::HTTP.get(url)
-      travel_time = JSON.parse(req)["travel_time_minutes"]
-      puts self.travel_time = travel_time
+      if Meeting.count != 0
+        id = id || Meeting.last.id + 1
+        else
+        id = 1
+      end
+
+      @start_coords = '51.5199586,-0.0984249' # Rentify coordinates
+      @departure_time = self.journey.start_time
+      @start_time = self.journey.start_time
+      @end_coords = get_coord(self.postcode)
+
+      if self.previous
+        @start_coords = get_coord(self.previous.postcode)
+        @departure_time = self.previous.departure_time
+        @start_time = self.previous.departure_time
+      end
+
+
+      @travel_time = 10
+      self.arrival_time = @departure_time + @travel_time.minutes
+      self.departure_time = self.duration ? self.arrival_time + self.duration.minutes : self.arrival_time
     end
 
     def get_coord(code)
